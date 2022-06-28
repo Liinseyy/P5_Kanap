@@ -41,7 +41,7 @@ article.appendChild(image);
         paragraphe.innerHTML = listProducts[i].description;
         article.appendChild(paragraphe);
 
-   
+            element.href = listProducts[i]._id;
             element.appendChild(article);
 
 //VARIABLE POUR DEFINIR ELEMENT COMME ENFANT DE SECTION
@@ -49,7 +49,3 @@ article.appendChild(image);
     section.appendChild(element);
     }
         }
-
-        let params = new URL(document.location).searchParams;
-        console.log(document.location);
-        let id = params.get(listProducts[i]._id);
