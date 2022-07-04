@@ -24,8 +24,8 @@ function articleCreation(listProducts) {
     const element = document.createElement('a');
     const article = document.createElement('article');
     const image = document.createElement('img');
-    const titre = document.createElement('h3');
-    const paragraphe = document.createElement('p');
+    const title = document.createElement('h3');
+    const paragraph = document.createElement('p');
 
 //PLACE LES ELEMENTS DANS LE DOM
 
@@ -33,15 +33,15 @@ image.alt = listProducts[i].altTxt;
 image.src = listProducts[i].imageUrl;
 article.appendChild(image);
 
-    titre.classList.add("productName");
-    titre.innerHTML = listProducts[i].name;
-    article.appendChild(titre);
+    title.classList.add("productName");
+    title.innerHTML = listProducts[i].name;
+    article.appendChild(title);
 
-        paragraphe.classList.add("productDescription");
-        paragraphe.innerHTML = listProducts[i].description;
-        article.appendChild(paragraphe);
+        paragraph.classList.add("productDescription");
+        paragraph.innerHTML = listProducts[i].description;
+        article.appendChild(paragraph);
 
-            element.href = listProducts[i]._id;
+            element.href = "http://127.0.0.1:5500/front/html/product.html?id="+listProducts[i]._id;
             element.appendChild(article);
 
 //VARIABLE POUR DEFINIR ELEMENT COMME ENFANT DE SECTION
@@ -49,3 +49,4 @@ article.appendChild(image);
     section.appendChild(element);
     }
         }
+
