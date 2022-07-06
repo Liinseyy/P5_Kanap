@@ -10,8 +10,8 @@ function getProductId(){
 }
 
 let prod_id = getProductId();
-
-let productData =[];    
+let productData =[];
+  
     
 const fetchProduct = async () => {
     fetch("http://localhost:3000/api/products/"+prod_id)  
@@ -19,21 +19,42 @@ const fetchProduct = async () => {
     .then((promise) => {
         console.log(promise);
         productData = promise;
-        //console.log(productData);
-    });
-    };
+        console.log(productData);
 
-        let productDisplay = async () => {
-        await fetchProduct();
-        
+        //IMAGE + ALT
         let img = document.querySelector(".item__img");
-        img.innerHTML = `<img src="${productData.imageUrl}" alt="${productData.altTxt}">`;  
-
+        img.innerHTML = `<img src="${productData.imageUrl}" alt="${productData.altTxt}">`; 
+        /////////////////
+        //TITRE DU CANAPE
         let name = document.getElementById("title");
         name.innerHTML = productData.name;
-    };
+        //////
+        //PRIX
+        let price = document.getElementById("price");
+        price.innerHTML = productData.price;
+        /////////////
+        //DESCRIPTION
+        let description = document.getElementById("description");
+        description.innerHTML = productData.description;
+        /////////////////////////
+        //MENU DEROULANT COULEURS
+        let select = document.getElementById("colors");
+        //console.log(select);
+        //console.log(productData.colors)
 
-    productDisplay();
+        productData.colors.forEach((color) => {
+        //console.log(color);
+        let tagOption = document.createElement("option");
+        tagOption.innerHTML = `${color}`;
+        tagOption.value = `${color}`;
+
+        select.appendChild(tagOption);
+        //console.log(tagOption);
+        })
+ });
+   };
+
+    fetchProduct();
 
 
-       
+
