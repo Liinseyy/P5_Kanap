@@ -51,10 +51,40 @@ const fetchProduct = async () => {
         select.appendChild(tagOption);
         //console.log(tagOption);
         })
- });
-   };
+    });
+};
 
     fetchProduct();
 
+   /* function qtyValue() {
+        let qty = document.getElementById("quantity");
+        return qty.value;
+      }
+      
+      function colorValue() {
+        let color = document.getElementById("colors");
+        return color.value;}
+        
+      // HTML element : button add to cart
+      const toCartBtn = document.getElementById("addToCart");
+      console.log(toCartBtn);
 
+      // Au clique du bouton
+      toCartBtn.addEventListener("click", () => {
+        let qty = parseInt(qtyValue());
+        let color = colorValue();
+        addToCart(id, color, qty);
+      });
+     // toCartBtn.addEventListener("click", () => {
+      //  window.location.href = "./cart.html";
+      //});*/
 
+      document.querySelector("#addToCart").addEventListener("click", function() {
+
+        if (document.querySelector("#quantity").reportValidity() &&
+            document.querySelector("colors").reportValidity()) {
+            product.quantity = parseInt(document.querySelector("#quantity").value);
+            product.color = document.querySelector("#colors").value;
+            cart.add(product);
+            window.location.assign("");
+        }})
