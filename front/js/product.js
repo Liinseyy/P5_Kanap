@@ -21,23 +21,24 @@ const fetchProduct = async () => {
         productData = promise;
         console.log(productData);
 
-        //IMAGE + ALT
+        /*____IMAGE + ALT____*/
         let img = document.querySelector(".item__img");
         img.innerHTML = `<img src="${productData.imageUrl}" alt="${productData.altTxt}">`; 
-        /////////////////
-        //TITRE DU CANAPE
+        
+        /*____TITRE DU CANAPE____*/
         let name = document.getElementById("title");
         name.innerHTML = productData.name;
-        //////
-        //PRIX
+        
+        /*____PRIX____*/
         let price = document.getElementById("price");
         price.innerHTML = productData.price;
-        /////////////
-        //DESCRIPTION
+        
+        /*____DESCRIPTION____*/
         let description = document.getElementById("description");
         description.innerHTML = productData.description;
-        /////////////////////////
-        //MENU DEROULANT COULEURS
+
+
+        /*____MENU DEROULANT COULEURS____*/
         let select = document.getElementById("colors");
         //console.log(select);
         //console.log(productData.colors)
@@ -56,35 +57,32 @@ const fetchProduct = async () => {
 
     fetchProduct();
 
-   /* function qtyValue() {
+    function qtyValue() {
         let qty = document.getElementById("quantity");
         return qty.value;
       }
       
-      function colorValue() {
+    function colorValue() {
         let color = document.getElementById("colors");
         return color.value;}
         
-      // HTML element : button add to cart
-      const toCartBtn = document.getElementById("addToCart");
-      console.log(toCartBtn);
 
+      // Ajout au panier avec le bouton
+      const toCartBtn = document.getElementById("addToCart");
+
+  
+      function cartBtn(id, qty, color){
+        return  id, qty, color;
+      }
       // Au clique du bouton
       toCartBtn.addEventListener("click", () => {
         let qty = parseInt(qtyValue());
         let color = colorValue();
-        addToCart(id, color, qty);
+        cartBtn(id, qty, color);
       });
+
+      
      // toCartBtn.addEventListener("click", () => {
       //  window.location.href = "./cart.html";
-      //});*/
+      //});
 
-      document.querySelector("#addToCart").addEventListener("click", function() {
-
-        if (document.querySelector("#quantity").reportValidity() &&
-            document.querySelector("colors").reportValidity()) {
-            product.quantity = parseInt(document.querySelector("#quantity").value);
-            product.color = document.querySelector("#colors").value;
-            cart.add(product);
-            window.location.assign("");
-        }})
