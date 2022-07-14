@@ -1,22 +1,11 @@
-/*//stockage
-localStorage.setItem();
+//stockage
+let addProduct = JSON.parse(localStorage.getItem("produit"));
+
+console.log(addProduct);
 
 //Recupération donnée
-localStorage.getItem();
+//localStorage.getItem();
 
 //suppression
-localStorage.removeItem();*/
+//localStorage.removeItem();
 
-
-function saveBasket(basket){
-    localStorage.setItem("basket", basket);
-}
-
-function getBasket() {
-    return localStorage.getItem("basket");
-}
-
-function addCart(product){
-    let basket = getBasket();
-    basket.push(product);
-}
