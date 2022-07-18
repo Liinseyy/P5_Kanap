@@ -75,19 +75,38 @@ const fetchProduct = async () => {
       // Ajout au panier avec le bouton
       const toCartBtn = document.getElementById("addToCart");
   
-      function addToCart(productId, qty, color){
-        return  productId, qty, color;
+      function buildProduct(productId, qty, color){
+        return  {id : productId, qty : qty, color : color};
       }
       // Au clique du bouton
       toCartBtn.addEventListener("click", () => {
         let qty = parseInt(qtyValue());
         let color = colorValue();
         let productId = getProductId();
-        addToCart(productId,qty,color);
 
-      localStorage.getItem("product", addToCart)
+
+        /*______TABLEAU LOCALSTORAGE_____*/
+
+          let tabLS = [];
+          //clé product
+          let basket = JSON.parse(localStorage.getItem("basketProduct") || '[]')
+          if(basket.length >= 0){
+          let basketTab = [buildProduct(productId, qty, color)]  
+          localStorage.setItem("basketProduct", JSON.stringify(basketTab))
+          
+          }
+          else{
+          if(productId != basketTab.productId){ 
+              buildProduct.qty++;
+          }  
+
+          }
+          
+
 
       });
+
+      
 
 
       /*toCartBtn.addEventListener("click", () => {
