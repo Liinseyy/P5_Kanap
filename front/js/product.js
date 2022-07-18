@@ -93,15 +93,12 @@ const fetchProduct = async () => {
           if(basket.length >= 0){
           let basketTab = [buildProduct(productId, qty, color)]  
           localStorage.setItem("basketProduct", JSON.stringify(basketTab))
-          
-          }
-          else{
-          if(productId != basketTab.productId){ 
-              buildProduct.qty++;
-          }  
 
+          }else{
+            if(buildProduct.productId = color)
+            buildProduct.qty ++;
           }
-          
+
 
 
       });
