@@ -104,10 +104,11 @@ const fetchProduct = async () => {
 
       const bouton = document.getElementById("addToCart");
       bouton.addEventListener("click", () => { 
-        let produitTableau = JSON.parse(localStorage.getItem("basketProduct"))
+        let produitTableau = JSON.parse(localStorage.getItem("productBasket"))
         let qty = parseInt(qtyValue());
         let color = colorValue();
 
+        /*object.assign permet d'assigner et/ou d'ajouter quelque chose à un objet (couleur+quantite)*/
         const fusionproduitColor = Object.assign({} , productData, {
           couleur: `${color}`,
           quantite: `${qty}`,
@@ -115,19 +116,23 @@ const fetchProduct = async () => {
         
 
         if(produitTableau == null) {
-          produitTableau = []
-          produitTableau.push(fusionproduitColor);
-          localStorage.setItem("basketProduct", JSON.stringify(produitTableau));
-        }
+          produitTableau = []  /* si il n'y a rien dans le tableau, il renvoi quand même un tableau vide*/
+          produitTableau.push(fusionproduitColor); 
+          localStorage.setItem("productBasket", JSON.stringify(produitTableau));
+        }/* si on stock le produit sans info, il renvoi les infos de base (name, price, etc)*/
 
         else if (produitTableau != null) {
+          /*boucle pour tourner dans le tableau, voir le nombre de produits (i = produit)*/
           for (i=0; i < produitTableau.length; i++){
             console.log('test')
+            /*SI le produit dans tableau(i) est égal au produit affiché ET la couleur du produit tableau est égal à la couleur*/
             if(produitTableau[i]._id == productData._id && produitTableau[i].couleur == color){
               return(
-                produitTableau[i].qty,
-                localStorage.setItem("basketProduct", JSON.stringify(produitTableau)),
-                (produitTableau = JSON.parse(localStorage.getItem("basketProduct")))
+                /* */
+                //produitTableau[i].quantite++,
+                //totalCostEl.textContent = `Total cost: $${(price * qty) + additionalCost}`
+                localStorage.setItem("productBasket", JSON.stringify(produitTableau)),
+                (produitTableau = JSON.parse(localStorage.getItem("productBasket")))
               );
             }
 
@@ -140,14 +145,14 @@ const fetchProduct = async () => {
               return(
                 console.log("test2"),
                 produitTableau.push(fusionproduitColor),
-                localStorage.setItem("basketProduct", JSON.stringify(produitTableau)),
-                (produitTableau = JSON.parse(localStorage.getItem("basketProduct")))
+                localStorage.setItem("productBasket", JSON.stringify(produitTableau)),
+                (produitTableau = JSON.parse(localStorage.getItem("productBasket")))
               );
             }
 
           }
         }
-        return (produitTableau = JSON.parse(localStorage.getItem("basketProduct")));
+        return (produitTableau = JSON.parse(localStorage.getItem("productBasket")));
       });
       
 
