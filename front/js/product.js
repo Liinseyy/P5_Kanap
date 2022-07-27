@@ -80,8 +80,8 @@ const fetchProduct = async () => {
 
         /*object.assign permet d'assigner et/ou d'ajouter quelque chose à un objet (couleur+quantite)*/
         const fusionproduitColor = Object.assign({} , productData, {
-          couleur: `${color}`,
-          quantite: `${qty}`,
+          couleur: color,
+          quantite: qty,
         });
         
 
@@ -99,7 +99,7 @@ const fetchProduct = async () => {
             if(produitTableau[i]._id == productData._id && produitTableau[i].couleur == color){
               return(
                 /*Ajouter nombre d'articles */
-                produitTableau[i].quantite++,
+                produitTableau[i].quantite = produitTableau[i].quantite + qty,
                 localStorage.setItem("basketProduct", JSON.stringify(produitTableau)),
                 (produitTableau = JSON.parse(localStorage.getItem("basketProduct")))
               );
