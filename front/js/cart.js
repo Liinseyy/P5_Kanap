@@ -124,36 +124,38 @@ panierDisplay();
 
 // FORMULAIRE
 
-const prenom = document.getElementById("firstName");
-const nom = document.getElementById("lastName");
-const adresse = document.getElementById("address");
-const ville = document.getElementById("city");
-const email = document.getElementById("email");
+  const prenom = document.getElementById("firstName");
+  const nom = document.getElementById("lastName");
+  const adresse = document.getElementById("address");
+  const ville = document.getElementById("city");
+  const email = document.getElementById("email");
 
-let valuePrenom, valueNom , valueEmail , valueAdresse , valueVille;
+    let valuePrenom, valueNom , valueEmail , valueAdresse , valueVille;
 
-prenom.addEventListener("input" , function (e) {
-  console.log(prenom.value)
-  valuePrenom;
-    // Si le champs est vide
-  if(e.target.value.length == 0){
-    console.log("Vide");
-    firstNameErrorMsg.innerHTML = "";
-    valuePrenom = null;
-    console.log(valuePrenom);   //Lettres seulement autorisés, entre 3 et 25 caractères
-  }else if (e.target.value.length < 3 || e.target.value.length > 25){
-    firstNameErrorMsg.innerHTML = "Ce champs doit contenir entre 3 et 25 caractères";
-    valuePrenom = null;
-    console.log("Non conforme");
-  }   //Validation
-  if (e.target.value.match(/^[a-z A-Z]{3,25}$/)){
-    firstNameErrorMsg.innerHTML = "";
-    valuePrenom = e.target.value;
-    console.log("success");
-    console.log(valuePrenom);
+                          // __________ >PRENOM<  __________
+
+    prenom.addEventListener("input" , function (e) {
+      console.log(prenom.value)
+      valuePrenom;
+        // Si le champs est vide
+      if(e.target.value.length == 0){
+        console.log("Vide");
+        firstNameErrorMsg.innerHTML = "";
+        valuePrenom = null;
+        console.log(valuePrenom);   //Lettres seulement autorisés, entre 3 et 25 caractères
+      }else if (e.target.value.length < 3 || e.target.value.length > 25){
+        firstNameErrorMsg.innerHTML = "Ce champs doit contenir entre 3 et 25 caractères";
+        valuePrenom = null;
+        console.log("Non conforme");
+     }   //Validation
+      if (e.target.value.match(/^[a-z A-Z]{3,25}$/)){
+       firstNameErrorMsg.innerHTML = "";
+        valuePrenom = e.target.value;
+        console.log("success");
+        console.log(valuePrenom);
   }
 });
-
+                          // __________ >NOM<  __________
 nom.addEventListener("input" , function (e) {
   console.log(nom.value)
   valueNom;
@@ -175,38 +177,38 @@ nom.addEventListener("input" , function (e) {
     console.log(valueNom);
   }
 });
-
-adresse.addEventListener("input" , function (e) {
-  console.log(adresse.value)
-  valueAdresse;
-  // Si le champs est vide
-  if(e.target.value.length == 0){
-    console.log("Vide");
-    addressErrorMsg.innerHTML = "";
-    valueAdresse = null;
-    console.log(valueAdresse);   //Lettres seulement autorisés, entre 3 et 25 caractères
-  }else if (e.target.value.length < 3 || e.target.value.length > 25){
-    addressErrorMsg.innerHTML = "Ce champs doit contenir entre 3 et 50 caractères";
-    valueAdresse = null;
-    console.log("Non conforme");
-  }   //Validation
-  if (e.target.value.match(/^[0-9]{1,6} [a-z A-Z]{3,25}$/)){
-    addressErrorMsg.innerHTML = "";
-    valueAdresse = e.target.value;
-    console.log("success");
-    console.log(valueAdresse);
-    //On refuse les caractères spéciaux
-  }if (
-    !e.target.value.match(/^[0-9]{1,6} [a-z A-Z]{3,25}$/) &&
-    e.target.value.length > 3 &&
-    e.target.value.length < 50
-  ) {
-    addressErrorMsg.innerHTML = "Caractère spéciaux interdits";
-    valueAdresse = null;
-    console.log("Caractères spéciaux");
-  }
+                          // __________ >ADRESSE<  __________
+    adresse.addEventListener("input" , function (e) {
+      console.log(adresse.value)
+      valueAdresse;
+      // Si le champs est vide
+      if(e.target.value.length == 0){
+       console.log("Vide");
+      addressErrorMsg.innerHTML = "";
+       valueAdresse = null;
+        console.log(valueAdresse);   //Lettres seulement autorisés, entre 3 et 25 caractères
+      }else if (e.target.value.length < 3 || e.target.value.length > 25){
+       addressErrorMsg.innerHTML = "Ce champs doit contenir entre 3 et 50 caractères";
+       valueAdresse = null;
+       console.log("Non conforme");
+      }   //Validation
+     if (e.target.value.match(/^[0-9]{1,6} [a-z A-Z]{3,25}$/)){
+       addressErrorMsg.innerHTML = "";
+        valueAdresse = e.target.value;
+        console.log("success");
+        console.log(valueAdresse);
+        //On refuse les caractères spéciaux
+      }if (
+       !e.target.value.match(/^[0-9]{1,6} [a-z A-Z]{3,25}$/) &&
+        e.target.value.length > 3 &&
+        e.target.value.length < 50
+     ) {
+       addressErrorMsg.innerHTML = "Caractère spéciaux interdits";
+       valueAdresse = null;
+       console.log("Caractères spéciaux");
+      }
 });
-
+                          // __________ >VILLE<  __________
 ville.addEventListener("input" , function (e) {
   console.log(ville.value)
   valueVille;
@@ -228,21 +230,62 @@ ville.addEventListener("input" , function (e) {
     console.log(valueVille);
   }
 });
-
-email.addEventListener("input" , (e) => {
-  if(e.target.value.length == 0){
-    emailErrorMsg.innerHTML = "";
-    valueEmail = null;
-    console.log(valueEmail);
-  }                                 // w -> word (mot)
-  else if (e.target.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/))  {
-    emailErrorMsg.innerHTML = "";
-    valueEmail = e.target.value;
-    console.log(valueEmail);
-  }
-  // ! > différent                                            // et différent de 0
-  if(!e.target.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/) && !e.target.value.length == 0){
-    emailErrorMsg.innerHTML = "Email incorrect";
-    valueEmail = null;
-  }
+                          // __________ >EMAIL<  __________ 
+    email.addEventListener("input" , (e) => {
+      if(e.target.value.length == 0){
+       emailErrorMsg.innerHTML = "";
+       valueEmail = null;
+        console.log(valueEmail);
+     }                                 // w -> word (mot)
+      else if (e.target.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/))  {
+      emailErrorMsg.innerHTML = "";
+       valueEmail = e.target.value;
+        console.log(valueEmail);
+     }
+     // ! > différent                                            // et différent de 0
+      if(!e.target.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/) && !e.target.value.length == 0){
+        emailErrorMsg.innerHTML = "Email incorrect";
+       valueEmail = null;
+     }
 });
+
+//Récupérer la class cart order form 
+const contact = document.querySelectorAll('.cart__order__form');
+
+contact.forEach(formulaireContact => {
+  formulaireContact.addEventListener("submit" , (e) => {
+    //stopper l'envoi des infos formulaire
+    e.preventDefault();
+    console.log("envoi stoppé");
+
+    //Créer la commande finale avec les informations formulaire
+    if(valuePrenom && valueNom && valueEmail && valueAdresse && valueVille) {
+      console.log("envoi");
+      const commandeFinale = JSON.parse(localStorage.getItem("basketProduct"));
+      let commandeId = [];
+      console.log(commandeFinale);
+      console.log(commandeId);
+
+      commandeFinale.forEach((commande) => {
+        commandeId.push(commande._id);
+      });
+      console.log(commandeId);      
+
+      const data = {
+        elementsContact:{
+          firstName : valuePrenom,
+          lastName : valueNom,
+          adresse : valueAdresse,
+          ville : valueVille,
+          email : valueEmail,
+        },
+        products : commandeId,
+      };
+
+      console.log(data);
+    }
+    else {
+      alert("Vous avez une erreur dans votre formulaire");
+    }
+  })
+})
