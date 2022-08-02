@@ -2,9 +2,15 @@ let someProduct = [];
 let sommeProduits = [];
 let addProduit = JSON.parse(localStorage.getItem("basketProduct"));
 
-fetch('http://localhost:3000/api/products/'{id})
-.then(res =>res.json())
-.then(dataprice => console.log(dataprice))
+let priceData = [];
+const fetchPrice = async () => {
+  fetch(`http://localhost:3000/api/products/${price}`)
+  .then((res) => res.json(),
+  ).then((promise) => {
+    console.log(promise);
+  });
+};
+fetchPrice();
 
 const panierDisplay = async () => {
     //console.log(panierDisplay);
