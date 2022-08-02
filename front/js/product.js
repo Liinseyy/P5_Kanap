@@ -20,6 +20,7 @@ const fetchProduct = async () => {
         console.log(promise);
         productData = promise;
         console.log(productData);
+        
 
         /*____IMAGE + ALT____*/
         let img = document.querySelector(".item__img");
@@ -77,12 +78,12 @@ const fetchProduct = async () => {
         let produitTableau = JSON.parse(localStorage.getItem("basketProduct"))
         let qty = parseInt(qtyValue());
         let color = colorValue();
-
         /*object.assign permet d'assigner et/ou d'ajouter quelque chose à un objet (couleur+quantite)*/
         const fusionproduitColor = Object.assign({} , productData, {
           couleur: color,
           quantite: qty,
         });
+        delete fusionproduitColor.price;
         
 
         if(produitTableau == null) {
@@ -94,7 +95,7 @@ const fetchProduct = async () => {
         else if (produitTableau != null) {
           /*boucle pour tourner dans le tableau, voir le nombre de produits (i = produit)*/
           for (i=0; i < produitTableau.length; i++){
-            console.log('test')
+
             /*SI le produit dans tableau(i) est égal au produit affiché ET la couleur du produit tableau est égal à la couleur*/
             if(produitTableau[i]._id == productData._id && produitTableau[i].couleur == color){
               return(
@@ -112,7 +113,6 @@ const fetchProduct = async () => {
                 produitTableau[i]._id != productData._id
               ) {
               return(
-                console.log("test2"),
                 produitTableau.push(fusionproduitColor),
                 localStorage.setItem("basketProduct", JSON.stringify(produitTableau)),
                 (produitTableau = JSON.parse(localStorage.getItem("basketProduct")))

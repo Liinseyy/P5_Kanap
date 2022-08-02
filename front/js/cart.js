@@ -2,8 +2,12 @@ let someProduct = [];
 let sommeProduits = [];
 let addProduit = JSON.parse(localStorage.getItem("basketProduct"));
 
+fetch('http://localhost:3000/api/products/'{id})
+.then(res =>res.json())
+.then(dataprice => console.log(dataprice))
+
 const panierDisplay = async () => {
-    console.log("Salut");
+    //console.log(panierDisplay);
     if(addProduit) {
       const cartItem = document.querySelector("#cart__items");
         cartItem.innerHTML = addProduit.map((basketProduct) => `
@@ -99,7 +103,7 @@ const removeProduct = async (panierDisplay) => {
     return;
 };
 
-const calculProduit = (panierDisplay,plusQuantite,removeProduct) => {
+const calculProduit = () => {
 
     console.log("test");
 
@@ -109,7 +113,7 @@ const calculProduit = (panierDisplay,plusQuantite,removeProduct) => {
     let newTableau = JSON.parse(localStorage.getItem("basketProduct"));
 
     newTableau.forEach((product) => {
-        produitPrice.push(product.price.toString()/*.replace(/00/,"")*/ * product.quantite);
+        produitPrice.push(product.price.toString() * product.quantite);
         quantiteTotalProduit.push(product.quantite);
     });
 
@@ -122,7 +126,7 @@ const calculProduit = (panierDisplay,plusQuantite,removeProduct) => {
 };
 panierDisplay();
 
-// FORMULAIRE
+                          // __________ > FORMULAIRE <  __________
 
   const prenom = document.getElementById("firstName");
   const nom = document.getElementById("lastName");
@@ -137,7 +141,7 @@ panierDisplay();
     prenom.addEventListener("input" , function (e) {
       console.log(prenom.value)
       valuePrenom;
-        // Si le champs est vide
+        // Si le champs est vide il me renvoi "null"
       if(e.target.value.length == 0){
         console.log("Vide");
         firstNameErrorMsg.innerHTML = "";
@@ -271,21 +275,37 @@ contact.forEach(formulaireContact => {
       });
       console.log(commandeId);      
 
-      const data = {
-        elementsContact:{
+      let data = {
+        contact:{
           firstName : valuePrenom,
           lastName : valueNom,
-          adresse : valueAdresse,
-          ville : valueVille,
+          address : valueAdresse,
+          city : valueVille,
           email : valueEmail,
         },
         products : commandeId,
       };
 
       console.log(data);
+
+      ///////////////////  FETCH POST  ///////////////////
+
+      fetch("http://localhost:3000/api/products/order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+      },
+        body: JSON.stringify(data),
+      })
+      .then((res) => res.json())
+      .then((promise) => {
+        let responseServeur = promise;
+        console.log(responseServeur);
+      });
+
     }
     else {
       alert("Vous avez une erreur dans votre formulaire");
     }
   })
-})
+});
