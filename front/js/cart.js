@@ -2,18 +2,18 @@ let someProduct = [];
 let sommeProduits = [];
 let addProduit = JSON.parse(localStorage.getItem("basketProduct"));
 
-let priceData = [];
+
 const fetchPrice = async () => {
-  fetch(`http://localhost:3000/api/products/${price}`)
-  .then((res) => res.json(),
-  ).then((promise) => {
+  fetch(`http://localhost:3000/api/products/${_id}`)
+  .then((res) => res.json())
+  .then((promise) => {
     console.log(promise);
   });
 };
 fetchPrice();
 
 const panierDisplay = async () => {
-    //console.log(panierDisplay);
+    //console.log("testpanierDisplay");
     if(addProduit) {
       const cartItem = document.querySelector("#cart__items");
         cartItem.innerHTML = addProduit.map((basketProduct) => `
