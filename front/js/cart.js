@@ -2,21 +2,27 @@ let someProduct = [];
 let sommeProduits = [];
 let addProduit = JSON.parse(localStorage.getItem("basketProduct"));
 
-
+//On rappel l'API pour obtenir le prix
 const fetchPrice = async () => {
-  fetch(`http://localhost:3000/api/products/${_id}`)
+
+  for(let i = 0; i < addProduit.length ; i++){
+    const produit = addProduit[i];
+  
+  fetch(`http://localhost:3000/api/products/${produit._id}`)
   .then((res) => res.json())
   .then((promise) => {
     console.log(promise);
-  });
+    price = promise.price;
+  });}
 };
+
 fetchPrice();
 
 const panierDisplay = async () => {
     //console.log("testpanierDisplay");
     if(addProduit) {
       const cartItem = document.querySelector("#cart__items");
-        cartItem.innerHTML = addProduit.map((basketProduct) => `
+        cartItem.innerHTML = addProduit.map((basketProduct, price) => `
             <article class="cart__item" data-id="${basketProduct._id}" data-color="${basketProduct.couleur}">
                 <div class="cart__item__img">
                   <img src="${basketProduct.imageUrl}" alt="Photographie d'un canapé ${basketProduct.name}">
@@ -24,9 +30,8 @@ const panierDisplay = async () => {
                 <div class="cart__item__content">
                   <div class="cart__item__content__description">
                     <h2>${basketProduct.name}</h2>
-
                     <p>Couleur : ${basketProduct.couleur}</p>
-                    <p>Prix : ${basketProduct.price} €</p>
+                    <p>Prix : ${price} €</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -50,6 +55,8 @@ const panierDisplay = async () => {
 
     }
 };
+
+          // MODIF ARTICLE
 const plusQuantite = async (panierDisplay) => {
     await panierDisplay;
     let plus = document.querySelectorAll(".itemQuantity");
@@ -77,6 +84,7 @@ const plusQuantite = async (panierDisplay) => {
     });
 };
 
+          // SUPPRESSION ARTICLE
 const removeProduct = async (panierDisplay) => {
     await panierDisplay;
     let corbeilles = document.querySelectorAll(".deleteItem");
