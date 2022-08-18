@@ -1,4 +1,4 @@
-let someProduct = [];
+let deleteProduct = [];
 let calculProduits = [];
 let addProduit = JSON.parse(localStorage.getItem("basketProduct"));
 //On rappel l'API pour obtenir le prix
@@ -57,8 +57,7 @@ const panierDisplay = async () => {
 
     }
 };
-
-          // MODIF ARTICLE
+                          // __________ > QUANTITE PLUS ET MOINS <  __________
 const plusQuantite = async (panierDisplay) => {
     await panierDisplay;
     let plus = document.querySelectorAll(".itemQuantity");
@@ -86,7 +85,7 @@ const plusQuantite = async (panierDisplay) => {
     });
 };
 
-          // SUPPRESSION ARTICLE
+                          // __________ > SUPPRESSION ARTICLE <  __________
 const removeProduct = async (panierDisplay) => {
     await panierDisplay;
     let forDelete = document.querySelectorAll(".deleteItem");
@@ -106,24 +105,24 @@ const removeProduct = async (panierDisplay) => {
             } 
             else {
                               //On filtre le tableau addProduit, el = les éléments
-                someProduct = addProduit.filter((el) => {
+                deleteProduct = addProduit.filter((el) => {
                  
                     //On récupère les données et on compare ce qu'il y a dans le tableau pour garder les éléments différents de l'article supprimé
                     if(btnDelete.dataset.id != el._id || btnDelete.dataset.couleur != el.couleur){
                         return true;
                     }
                 });
-                localStorage.setItem("basketProduct", JSON.stringify(someProduct));
+                localStorage.setItem("basketProduct", JSON.stringify(deleteProduct));
                 location.href = "cart.html";
             }
         });
     });
     return;
 };
-
+                          // __________ > TOTAL PRIX <  __________
 const calculProduit = async () => {
   const productsPrice = await fetchPrice();
-    console.log(productsPrice);
+   console.log(productsPrice);
 
     //Stock les prix
     let produitPrice = [];
@@ -132,19 +131,20 @@ const calculProduit = async () => {
 
     //Tableau pour le calcul
     let calculTableau = JSON.parse(localStorage.getItem("basketProduct"));
-
+                  //forEach = chaque tour du tableau
     calculTableau.forEach((product) => {
         //on push le tableau avec le prix * la quantité
-        produitPrice.push(productsPrice * product.quantite);
+        produitPrice.push(productsPrice[product._id] * product.quantite);
+                          //productsPrice contient le prix/id, l'index product._id récupère le prix de l'ID de l'article 
         quantiteTotalProduit.push(product.quantite);
     });
-                                  // eval évalue et affiche le nombres d'articles dans "Total (4 articles) : €"
-    totalQuantity.textContent = `${eval(quantiteTotalProduit.join("+"))}`;
+                                  // eval évalue et affiche le nombres d'articles dans "Total (4 articles) : €" 
+    totalQuantity.textContent = `${eval(quantiteTotalProduit.join("+"))}`;//quantiteTotalProduit = Nombres de canapés par articles
                     //replace = on retire les , avec // , g = général
     calculProduits = eval(produitPrice.toString().replace(/,/g, "+"));
     console.log(calculProduits);
 
-    totalPrice.textContent = calculProduits;console.log(calculProduits);
+    totalPrice.textContent = calculProduits;
 };
 panierDisplay();
 
@@ -309,6 +309,11 @@ contact.forEach(formulaireContact => {
       };
 
       console.log(data);
+
+
+      // Bouton commander
+      document.getElementById("order").innerHTML =
+      window.location.href = "./confirmation.html";
 
       ///////////////////  FETCH POST  ///////////////////
 

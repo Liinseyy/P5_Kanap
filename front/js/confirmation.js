@@ -4,7 +4,7 @@ const id = url.searchParams.get("id");
 const orderId = document.getElementById("orderId");
 orderId.innerHTML = id;
 
-console.log(id);*/
+console.log(str);*/
 
 
 const element = document.querySelector('#orderId');
@@ -17,4 +17,4 @@ fetch('http://localhost:3000/api/products', requestOptions)
     .then(response => response.json())
     .then(data => element.innerHTML = data._id );
 
-    console.log(data);
+    //console.log(response);
