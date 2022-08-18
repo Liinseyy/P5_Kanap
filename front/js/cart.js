@@ -1,28 +1,30 @@
 let someProduct = [];
-let sommeProduits = [];
+let calculProduits = [];
 let addProduit = JSON.parse(localStorage.getItem("basketProduct"));
-
 //On rappel l'API pour obtenir le prix
 const fetchPrice = async () => {
+  if(addProduit != null){
+    let productsPrice = new Object();
+    for(let i = 0; i < addProduit.length ; i++){
+      await fetch(`http://localhost:3000/api/products/${addProduit[i]._id}`)
+        .then((res) => res.json())
+        .then((promise) => {
 
-  for(let i = 0; i < addProduit.length ; i++){
-    const produit = addProduit[i];
-  
-  fetch(`http://localhost:3000/api/products/${produit._id}`)
-  .then((res) => res.json())
-  .then((promise) => {
-    console.log(promise);
-    price = promise.price;
-  });}
+          productsPrice[addProduit[i]._id] = promise.price;
+      });
+    }    
+    return productsPrice;
+  }
 };
 
-fetchPrice();
+// fetchPrice();
 
 const panierDisplay = async () => {
     //console.log("testpanierDisplay");
+    const resultPrices = await fetchPrice();
     if(addProduit) {
       const cartItem = document.querySelector("#cart__items");
-        cartItem.innerHTML = addProduit.map((basketProduct, price) => `
+        cartItem.innerHTML = addProduit.map((basketProduct) => `
             <article class="cart__item" data-id="${basketProduct._id}" data-color="${basketProduct.couleur}">
                 <div class="cart__item__img">
                   <img src="${basketProduct.imageUrl}" alt="Photographie d'un canapé ${basketProduct.name}">
@@ -31,7 +33,7 @@ const panierDisplay = async () => {
                   <div class="cart__item__content__description">
                     <h2>${basketProduct.name}</h2>
                     <p>Couleur : ${basketProduct.couleur}</p>
-                    <p>Prix : ${price} €</p>
+                    <p>Prix : ${resultPrices[basketProduct._id]} €</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -87,11 +89,11 @@ const plusQuantite = async (panierDisplay) => {
           // SUPPRESSION ARTICLE
 const removeProduct = async (panierDisplay) => {
     await panierDisplay;
-    let corbeilles = document.querySelectorAll(".deleteItem");
+    let forDelete = document.querySelectorAll(".deleteItem");
 
-    corbeilles.forEach((corbeille) => {
-        corbeille.addEventListener("click", () => {
-            console.log(corbeille);
+    forDelete.forEach((btnDelete) => {
+        btnDelete.addEventListener("click", () => {
+            console.log(btnDelete);
 
             let totalAddProduitRemove = addProduit.length;
 
@@ -103,12 +105,14 @@ const removeProduct = async (panierDisplay) => {
                 );
             } 
             else {
+                              //On filtre le tableau addProduit, el = les éléments
                 someProduct = addProduit.filter((el) => {
-                    if(corbeille.dataset.id != el._id || corbeille.dataset.couleur != el.couleur){
+                 
+                    //On récupère les données et on compare ce qu'il y a dans le tableau pour garder les éléments différents de l'article supprimé
+                    if(btnDelete.dataset.id != el._id || btnDelete.dataset.couleur != el.couleur){
                         return true;
                     }
                 });
-                console.log(someProduct);
                 localStorage.setItem("basketProduct", JSON.stringify(someProduct));
                 location.href = "cart.html";
             }
@@ -117,26 +121,30 @@ const removeProduct = async (panierDisplay) => {
     return;
 };
 
-const calculProduit = () => {
+const calculProduit = async () => {
+  const productsPrice = await fetchPrice();
+    console.log(productsPrice);
 
-    console.log("test");
-
+    //Stock les prix
     let produitPrice = [];
+    //Stock les quantités
     let quantiteTotalProduit = [];
 
-    let newTableau = JSON.parse(localStorage.getItem("basketProduct"));
+    //Tableau pour le calcul
+    let calculTableau = JSON.parse(localStorage.getItem("basketProduct"));
 
-    newTableau.forEach((product) => {
-        produitPrice.push(product.price.toString() * product.quantite);
+    calculTableau.forEach((product) => {
+        //on push le tableau avec le prix * la quantité
+        produitPrice.push(productsPrice * product.quantite);
         quantiteTotalProduit.push(product.quantite);
     });
-
+                                  // eval évalue et affiche le nombres d'articles dans "Total (4 articles) : €"
     totalQuantity.textContent = `${eval(quantiteTotalProduit.join("+"))}`;
+                    //replace = on retire les , avec // , g = général
+    calculProduits = eval(produitPrice.toString().replace(/,/g, "+"));
+    console.log(calculProduits);
 
-    sommeProduits = eval(produitPrice.toString().replace(/,/g, "+"));
-    console.log(sommeProduits);
-
-    totalPrice.textContent = sommeProduits 
+    totalPrice.textContent = calculProduits;console.log(calculProduits);
 };
 panierDisplay();
 
