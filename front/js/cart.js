@@ -1,5 +1,6 @@
 let deleteProduct = [];
 let calculProduits = [];
+let commandeProduits = JSON.parse(localStorage.getItem("commandes")); 
 let addProduit = JSON.parse(localStorage.getItem("basketProduct"));
 //On rappel l'API pour obtenir le prix
 const fetchPrice = async () => {
@@ -310,11 +311,6 @@ contact.forEach(formulaireContact => {
 
       console.log(data);
 
-
-      // Bouton commander
-      document.getElementById("order").innerHTML =
-      window.location.href = "./confirmation.html";
-
       ///////////////////  FETCH POST  ///////////////////
 
       fetch("http://localhost:3000/api/products/order", {
@@ -326,12 +322,28 @@ contact.forEach(formulaireContact => {
       })
       .then((res) => res.json())
       .then((promise) => {
-        let responseServeur = promise;
-        console.log(responseServeur);
-      });
-
-    }
-    else {
+        let reponseServeur = promise;
+        console.log(reponseServeur);
+      
+    //Il récupère les informations de la commande (formulaire, l'id de commande et le prix)
+      const dataCommande = {
+      contact:reponseServeur.contact,
+      order : reponseServeur.orderId,
+      total : calculProduits,
+    };
+    //Si il y a une commande il renvoi la commande
+      if(commandeProduits == null){
+        commandeProduits= []
+        commandeProduits.push(dataCommande);
+        localStorage.setItem("commandes",JSON.stringify(commandeProduits));
+      }
+      //Sinon, si la commande est vide, il renvoi un tableau vide
+      else if(commandeProduits != null) {
+        commandesProduits.push(dataCommande);
+      }});
+      //localStorage.removeItem("basketProduct");
+      location.href = "./confirmation.html";
+    }else {
       alert("Vous avez une erreur dans votre formulaire");
     }
   })
