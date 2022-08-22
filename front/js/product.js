@@ -70,6 +70,7 @@ const fetchProduct = async () => {
 
     const bouton = document.getElementById("addToCart");
     bouton.addEventListener("click", () => { 
+      location.href = "./cart.html";
       let produitTableau = JSON.parse(localStorage.getItem("basketProduct"))
       let qty = parseInt(qtyValue());
       let color = colorValue();
