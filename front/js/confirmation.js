@@ -1,20 +1,20 @@
+//On récupère dans le LS la commande envoyée
+const commandes = JSON.parse(localStorage.getItem("commandes"));
+//Fonction async pour attendre la commande
+const commandeDisplay = async () => {
 
-/*const str = window.location.href;   //Recup lien de la page
-const url = new URL(str);
-const id = url.searchParams.get("id");
+// On attend commandes avant d'exécuter le reste
+    if (commandes) {
+await commandes;
+                                // le -1 permet de récupérer le dernier élèment (l'index 1)
+const lastCommande = commandes[commandes.length -1];
+console.log(lastCommande);
+
+//On cherche l'id orderId dans le HTML
 const orderId = document.getElementById("orderId");
-orderId.innerHTML = id;
-console.log(str);*/
+//On récupère dans la liste des éléments de la page cart, l'id de commande
+orderId.innerHTML = lastCommande.order;
+    }
+}
 
-
-const element = document.querySelector('#orderId');
-const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ title: 'Fetch POST' })
-};
-fetch('http://localhost:3000/api/products/order', requestOptions)
-    .then(response => response.json())
-    .then(data => element.innerHTML = data._id );
-
-    console.log(response);
+commandeDisplay();

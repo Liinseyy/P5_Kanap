@@ -8,7 +8,7 @@ function getProductId(){
   let productId = url.searchParams.get("id");
   return productId;
 }
-
+// id du produit
 let prod_id = getProductId();
 let productData =[];
 
@@ -58,21 +58,15 @@ const fetchProduct = async () => {
 };
 
   fetchProduct();
-
+    // QUANTITE
   function qtyValue() {
       let qty = document.getElementById("quantity");
       return qty.value;
     }
-    
+    // COULEUR
   function colorValue() {
       let color = document.getElementById("colors");
       return color.value;}
-
-  function getProductId(){
-    let url = new URL(getURL());
-    let productId = url.searchParams.get("id");
-    return productId; 
-  }
 
     const bouton = document.getElementById("addToCart");
     bouton.addEventListener("click", () => { 
@@ -84,6 +78,7 @@ const fetchProduct = async () => {
         couleur: color,
         quantite: qty,
       }); 
+      //On retire le prix du localStorage pour la sécurité
       delete fusionproduitColor.price;       
 
       if(produitTableau == null) {
