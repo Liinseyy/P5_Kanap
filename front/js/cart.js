@@ -4,7 +4,9 @@ let commandeProduits = JSON.parse(localStorage.getItem("commandes"));
 let addProduit = JSON.parse(localStorage.getItem("basketProduct"));
 //On rappel l'API pour obtenir le prix
 const fetchPrice = async () => {
+  //Si addProduit est différent de null
   if(addProduit != null){
+    //Il me fait un nouvel objet POUR aller me chercher l'index du prix
     let productsPrice = new Object();
     for(let i = 0; i < addProduit.length ; i++){
       await fetch(`http://localhost:3000/api/products/${addProduit[i]._id}`)
@@ -18,10 +20,8 @@ const fetchPrice = async () => {
   }
 };
 
-// fetchPrice();
-
 const panierDisplay = async () => {
-    //console.log("testpanierDisplay");
+
     const resultPrices = await fetchPrice();
     if(addProduit) {
       const cartItem = document.querySelector("#cart__items");
@@ -49,8 +49,8 @@ const panierDisplay = async () => {
             </article>
         `
         );
-        calculProduit();
-        plusQuantite();
+        calculProduct();
+        quantityProduct();
         removeProduct();
         return;
         
@@ -59,25 +59,25 @@ const panierDisplay = async () => {
     }
 };
                           // __________ > QUANTITE PLUS ET MOINS <  __________
-const plusQuantite = async (panierDisplay) => {
-    await panierDisplay;
-    let plus = document.querySelectorAll(".itemQuantity");
-    console.log(plus);
-    plus.forEach((kanapplus) => {
-        kanapplus.addEventListener("change", () => {
-            console.log(kanapplus);
-
-
+const quantityProduct = async (panierDisplay) => {
+    await panierDisplay;//On attend le panierDisplay 
+    let btnQuantity = document.querySelectorAll(".itemQuantity");
+    console.log(btnQuantity);
+    
+    btnQuantity.forEach((quantiteChange) => {
+        quantiteChange.addEventListener("change", () => {
+            //on fait une boucle dans addProduit (i++ -> un tour)
             for(i=0; i< addProduit.length;i++){
               if ( 
-                addProduit[i]._id == kanapplus.dataset.id &&
-                addProduit[i].couleur == kanapplus.dataset.couleur
+                //on compare le produit avec son id
+                addProduit[i]._id == quantiteChange.dataset.id &&
+                addProduit[i].couleur == quantiteChange.dataset.couleur
                 )  {
                 return (
-                  addProduit[i].quantite = +kanapplus.value,
+                  addProduit[i].quantite = +quantiteChange.value,
                     localStorage.setItem("basketProduct", JSON.stringify(addProduit)),
                     (document.querySelectorAll(".itemQuantity")[i].textContent = addProduit[i].quantite),
-                    calculProduit()
+                    calculProduct()
                 );
               }
             }
@@ -121,7 +121,7 @@ const removeProduct = async (panierDisplay) => {
     return;
 };
                           // __________ > TOTAL PRIX <  __________
-const calculProduit = async () => {
+const calculProduct = async () => {
   const productsPrice = await fetchPrice();
    console.log(productsPrice);
 
@@ -142,10 +142,10 @@ const calculProduit = async () => {
                                   // eval évalue et affiche le nombres d'articles dans "Total (4 articles) : €" 
     totalQuantity.textContent = `${eval(quantiteTotalProduit.join("+"))}`;//quantiteTotalProduit = Nombres de canapés par articles
                     //replace = on retire les , avec // , g = général
-    calculProduits = eval(produitPrice.toString().replace(/,/g, "+"));
-    console.log(calculProduits);
+    calculProducts = eval(produitPrice.toString().replace(/,/g, "+"));
+    console.log(calculProducts);
 
-    totalPrice.textContent = calculProduits;
+    totalPrice.textContent = calculProducts;
 };
 panierDisplay();
 
@@ -329,7 +329,7 @@ contact.forEach(formulaireContact => {
       const dataCommande = {
       contact:reponseServeur.contact,
       order : reponseServeur.orderId,
-      total : calculProduits,
+      total : calculProducts,
     };
     //Si il y a une commande il renvoi la commande
       if(commandeProduits == null){
